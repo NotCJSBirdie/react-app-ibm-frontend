@@ -7,6 +7,8 @@ import Login from './Components/Login/Login';
 import InstantConsultation from './Components/InstantConsultationBooking/InstantConsultation';
 import BookingConsultation from './Components/BookingConsultation/BookingConsultation';
 import Notification from './Components/Notification/Notification';
+import ReviewsTable from './Components/ReviewsTable/ReviewsTable';
+
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
             <Route path="/appointments" element={<BookingConsultation />} />
           </Routes>
         </Notification>
+        <ReviewsTable />
       </BrowserRouter>
     </div>
   );
