@@ -1,0 +1,154 @@
+/* Styles for the main container */
+.container {
+    max-width: 900px; /* Maximum width of the container */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 40px; /* Padding inside the container */
+    margin-top: 10%; /* Top margin of 10% */
+}
+
+/* Styles for login grid layout */
+.login-grid {
+    text-align: center; /* Center align content */
+}
+
+/* Styles for login text */
+.login-text {
+    margin-bottom: 15px; /* Bottom margin for spacing */
+}
+
+.login-text h2 {
+    color: #2190FF; /* Blue color for heading */
+    font-size: 2rem; /* Large font size for heading */
+    margin-bottom: 20px; /* Bottom margin */
+}
+
+.login-text span a {
+    text-decoration: none; /* Remove underline from links */
+    font-weight: 600; /* Bold font weight */
+}
+
+.login-text span a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+/* Styles for login form */
+.login-form {
+    margin-top: 20px; /* Top margin */
+    text-align: left; /* Left align form content */
+    display: inline-block; /* Display as inline block */
+}
+
+/* Styles for form groups */
+.form-group {
+    margin-bottom: 20px; /* Bottom margin for spacing between form groups */
+}
+
+/* Styles for form group labels */
+.form-group label {
+    display: block; /* Make labels display as block elements */
+    margin-bottom: 5px; /* Bottom margin for spacing below labels */
+    font-weight: bold; /* Bold text for labels */
+    color: #333; /* Dark color for labels */
+}
+
+/* Styles for form controls */
+.form-control {
+    width: 100%; /* Full width of form controls */
+    min-width: 300px; /* Minimum width */
+    padding: 12px; /* Increased padding inside form controls */
+    font-size: 16px; /* Font size of form controls */
+    border: 1px solid #ccc; /* Border around form controls */
+    border-radius: 4px; /* Border radius for rounded corners */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Focus state for form controls */
+.form-control:focus {
+    border-color: #2190FF; /* Blue border on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(33, 144, 255, 0.3); /* Blue shadow on focus */
+}
+
+/* Styles for button groups */
+.btn-group {
+    margin-top: 20px; /* Top margin for spacing above button groups */
+    margin-bottom: 20px; /* Bottom margin for spacing below button groups */
+    text-align: center; /* Center align buttons */
+}
+
+/* Styles for buttons */
+.btn {
+    padding: 12px 24px; /* Increased padding inside buttons */
+    font-size: 16px; /* Font size of buttons */
+    border: none; /* No border for buttons */
+    border-radius: 4px; /* Border radius for rounded corners on buttons */
+    cursor: pointer; /* Cursor style on hover for buttons */
+    margin-right: 10px; /* Space between buttons */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Styles for primary buttons */
+.btn-primary {
+    background-color: #007bff; /* Background color for primary buttons */
+    color: #fff; /* Text color for primary buttons */
+}
+
+/* Hover effect for primary buttons */
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Styles for danger (red) buttons */
+.btn-danger {
+    background-color: #dc3545; /* Background color for danger buttons */
+    color: #fff; /* Text color for danger buttons */
+}
+
+/* Hover effect for danger buttons */
+.btn-danger:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Forgot password styling */
+.login-text:last-child {
+    color: #2190FF; /* Blue color for forgot password */
+    cursor: pointer; /* Pointer cursor */
+    font-size: 14px; /* Smaller font size */
+    margin-top: 10px; /* Top margin */
+}
+
+.login-text:last-child:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px; /* Reduced padding on mobile */
+        margin-top: 5%; /* Reduced top margin on mobile */
+    }
+    
+    .form-control {
+        min-width: 250px; /* Smaller minimum width on mobile */
+    }
+    
+    .btn {
+        width: 45%; /* Make buttons take more space on mobile */
+        margin-bottom: 10px; /* Add bottom margin */
+    }
+    
+    .login-text h2 {
+        font-size: 1.5rem; /* Smaller heading on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .form-control {
+        min-width: 200px; /* Even smaller on very small screens */
+    }
+    
+    .btn {
+        width: 100%; /* Full width buttons on very small screens */
+        margin-right: 0; /* Remove right margin */
+    }
+}
