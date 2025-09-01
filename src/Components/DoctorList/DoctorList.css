@@ -1,0 +1,55 @@
+/* Components/DoctorList/DoctorList.css */
+.doctor-list-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.doctor-list-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.doctors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    justify-items: center;
+}
+
+.no-doctors {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin: 40px auto;
+    max-width: 500px;
+}
+
+.no-doctors p {
+    font-size: 18px;
+    color: #666;
+    margin: 10px 0;
+}
+
+.no-doctors p:first-child {
+    font-weight: 600;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .doctors-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .doctor-list-container {
+        padding: 0 10px;
+    }
+    
+    .doctor-list-container h2 {
+        font-size: 24px;
+    }
+}

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './FindDoctorSearch.css';
-import { useNavigate } from 'react-router-dom';
 
 const initSpeciality = [
     'Dentist', 
@@ -12,16 +11,25 @@ const initSpeciality = [
     'Ayurveda'
 ];
 
-const FindDoctorSearch = () => {
+const FindDoctorSearch = ({ onSpecialitySelect }) => {
     const [doctorResultHidden, setDoctorResultHidden] = useState(true);
     const [searchDoctor, setSearchDoctor] = useState('');
     const [specialities, setSpecialities] = useState(initSpeciality);
-    const navigate = useNavigate();
 
     const handleDoctorSelect = (speciality) => {
         setSearchDoctor(speciality);
         setDoctorResultHidden(true);
-        navigate(`/find-doctor?speciality=${speciality}`);
+        
+        // Pass the selected speciality to parent component
+        if (onSpecialitySelect) {
+            onSpecialitySelect(speciality);
+        }
+    };
+
+    const handleSearch = () => {
+        if (searchDoctor.trim() && onSpecialitySelect) {
+            onSpecialitySelect(searchDoctor);
+        }
     };
 
     return (
@@ -40,10 +48,11 @@ const FindDoctorSearch = () => {
                             onFocus={() => setDoctorResultHidden(false)} 
                             onBlur={() => setDoctorResultHidden(true)} 
                             value={searchDoctor} 
-                            onChange={(e) => setSearchDoctor(e.target.value)} 
+                            onChange={(e) => setSearchDoctor(e.target.value)}
+                            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                         />
                         
-                        <div className="findiconimg">
+                        <div className="findiconimg" onClick={handleSearch}>
                             <img className='findIcon' src={process.env.PUBLIC_URL + '/images/search.svg'} alt="search"/>
                         </div>
                         
