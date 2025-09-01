@@ -175,3 +175,20 @@ nav {
     background-color:#3685fb;
     color:white;
 }
+
+.username {
+  color: #3685fb;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.nav__links .username {
+  display: flex;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .username {
+    margin-bottom: 10px;
+  }
+}

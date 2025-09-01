@@ -1,191 +1,178 @@
+// Following code has been commented with appropriate comments for your reference.
 import React, { useState } from 'react';
-import './Sign_Up.css';
+import './Sign_Up.css'
+import { Link, useNavigate } from 'react-router-dom';
+import { API_URL } from '../../config';
 
+// Function component for Sign Up form
 const Sign_Up = () => {
-  const [formData, setFormData] = useState({
-    role: '',
-    name: '',
-    phone: '',
-    email: '',
-    password: ''
-  });
+    // State variables using useState hook
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [password, setPassword] = useState('');
+    const [role, setRole] = useState('');
+    const [showerr, setShowerr] = useState(''); // State to show error messages
+    const navigate = useNavigate(); // Navigation hook from react-router
 
-  const [errors, setErrors] = useState({});
-  const [showError, setShowError] = useState(false);
+    // Function to handle form submission
+    const register = async (e) => {
+        e.preventDefault(); // Prevent default form submission
+        
+        // Client-side validation
+        if (!name || !email || !phone || !password || !role) {
+            setShowerr('Please fill in all fields');
+            return;
+        }
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
+        // Phone validation - exactly 10 digits
+        const phoneRegex = /^\d{10}$/;
+        if (!phoneRegex.test(phone)) {
+            setShowerr('Phone number must be exactly 10 digits');
+            return;
+        }
 
-  const validateForm = () => {
-    const newErrors = {};
+        // API Call to register user
+        try {
+            const response = await fetch(`${API_URL}/api/auth/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    password: password,
+                    phone: phone,
+                    role: role,
+                }),
+            });
 
-    // Role validation
-    if (!formData.role) {
-      newErrors.role = 'Please select a role';
-    }
+            const json = await response.json(); // Parse the response JSON
+            
+            if (json.authtoken) {
+                // Store user data in session storage
+                sessionStorage.setItem("auth-token", json.authtoken);
+                sessionStorage.setItem("name", name);
+                sessionStorage.setItem("phone", phone);
+                sessionStorage.setItem("email", email);
+                // Redirect user to home page
+                navigate("/");
+                window.location.reload(); // Refresh the page
+            } else {
+                if (json.errors) {
+                    for (const error of json.errors) {
+                        setShowerr(error.msg); // Show error messages
+                    }
+                } else {
+                    setShowerr(json.error);
+                }
+            }
+        } catch (error) {
+            console.error('Registration error:', error);
+            setShowerr('Registration failed. Please try again.');
+        }
+    };
 
-    // Name validation
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-
-    // Phone validation - exactly 10 digits
-    const phoneRegex = /^\d{10}$/;
-    if (!formData.phone) {
-      newErrors.phone = 'Phone number is required';
-    } else if (!phoneRegex.test(formData.phone)) {
-      newErrors.phone = 'Phone number must be exactly 10 digits';
-    }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email) {
-      newErrors.email = 'Email is required';
-    } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-
-    // Password validation
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters long';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setShowError(true);
-    
-    if (validateForm()) {
-      // Handle successful form submission
-      alert('Sign up successful!');
-      console.log('Form submitted:', formData);
-      // Reset form or redirect
-    }
-  };
-
-  const handleReset = () => {
-    setFormData({
-      role: '',
-      name: '',
-      phone: '',
-      email: '',
-      password: ''
-    });
-    setErrors({});
-    setShowError(false);
-  };
-
-  return (
-    <div className="container" style={{ marginTop: '5%' }}>
-      <div className="signup-grid">
-        <div className="signup-text">
-          <h1>Sign Up</h1>
+    // JSX to render the Sign Up form
+    return (
+        <div className="container" style={{marginTop:'5%'}}>
+            <div className="signup-grid">
+                <div className="signup-text">
+                    <h1>Sign Up</h1>
+                </div>
+                <div className="signup-text1" style={{textAlign: 'left'}}>
+                    Already a member? <span><Link to="/login" style={{color: '#2190FF'}}> Login</Link></span>
+                </div>
+                <div className="signup-form">
+                    <form method="POST" onSubmit={register}>
+                        <div className="form-group">
+                            <label htmlFor="role">Role</label>
+                            <select 
+                                value={role} 
+                                onChange={(e) => setRole(e.target.value)} 
+                                name="role" 
+                                id="role" 
+                                className="form-control"
+                                required
+                            >
+                                <option value="">Select your role</option>
+                                <option value="doctor">Doctor</option>
+                                <option value="patient">Patient</option>
+                            </select>
+                        </div>
+                        
+                        <div className="form-group">
+                            <label htmlFor="name">Name</label>
+                            <input 
+                                value={name} 
+                                type="text" 
+                                onChange={(e) => setName(e.target.value)} 
+                                name="name" 
+                                id="name" 
+                                className="form-control" 
+                                placeholder="Enter your name" 
+                                aria-describedby="helpId" 
+                                required
+                            />
+                        </div>
+                        
+                        <div className="form-group">
+                            <label htmlFor="phone">Phone</label>
+                            <input 
+                                value={phone} 
+                                onChange={(e) => setPhone(e.target.value)} 
+                                type="tel" 
+                                name="phone" 
+                                id="phone" 
+                                className="form-control" 
+                                placeholder="Enter your phone number" 
+                                aria-describedby="helpId"
+                                required 
+                            />
+                        </div>
+                        
+                        <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <input 
+                                value={email} 
+                                onChange={(e) => setEmail(e.target.value)} 
+                                type="email" 
+                                name="email" 
+                                id="email" 
+                                className="form-control" 
+                                placeholder="Enter your email" 
+                                aria-describedby="helpId"
+                                required 
+                            />
+                        </div>
+                        
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <input 
+                                value={password} 
+                                onChange={(e) => setPassword(e.target.value)} 
+                                type="password" 
+                                name="password" 
+                                id="password" 
+                                className="form-control" 
+                                placeholder="Enter your password" 
+                                aria-describedby="helpId"
+                                required 
+                            />
+                        </div>
+                        
+                        {showerr && <div className="err" style={{ color: 'red', marginBottom: '10px' }}>{showerr}</div>}
+                        
+                        <div className="btn-group">
+                            <button type="submit" className="btn btn-primary mb-2 mr-1 waves-effect waves-light">Submit</button>
+                            <button type="reset" className="btn btn-danger mb-2 waves-effect waves-light">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div className="signup-text1" style={{ textAlign: 'left' }}>
-          Already a member? <span><a href="/login" style={{ color: '#2190FF' }}> Login</a></span>
-        </div>
-        <div className="signup-form">
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="role">Role</label>
-              <select 
-                name="role" 
-                id="role" 
-                value={formData.role}
-                onChange={handleInputChange}
-                required 
-                className="form-control"
-              >
-                <option value="">Select your role</option>
-                <option value="doctor">Doctor</option>
-                <option value="patient">Patient</option>
-              </select>
-              {showError && errors.role && <span className="error">{errors.role}</span>}
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="name">Name</label>
-              <input 
-                type="text" 
-                name="name" 
-                id="name" 
-                value={formData.name}
-                onChange={handleInputChange}
-                required 
-                className="form-control" 
-                placeholder="Enter your name" 
-                aria-describedby="helpId" 
-              />
-              {showError && errors.name && <span className="error">{errors.name}</span>}
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="phone">Phone</label>
-              <input 
-                type="tel" 
-                name="phone" 
-                id="phone" 
-                value={formData.phone}
-                onChange={handleInputChange}
-                required 
-                className="form-control" 
-                placeholder="Enter your phone number" 
-                aria-describedby="helpId" 
-              />
-              {showError && errors.phone && <span className="error">{errors.phone}</span>}
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input 
-                type="email" 
-                name="email" 
-                id="email" 
-                value={formData.email}
-                onChange={handleInputChange}
-                required 
-                className="form-control" 
-                placeholder="Enter your email" 
-                aria-describedby="helpId" 
-              />
-              {showError && errors.email && <span className="error">{errors.email}</span>}
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input 
-                type="password" 
-                name="password" 
-                id="password" 
-                value={formData.password}
-                onChange={handleInputChange}
-                required 
-                className="form-control" 
-                placeholder="Enter your password" 
-                aria-describedby="helpId" 
-              />
-              {showError && errors.password && <span className="error">{errors.password}</span>}
-            </div>
-            
-            <div className="btn-group">
-              <button type="submit" className="btn btn-primary mb-2 mr-1 waves-effect waves-light">Submit</button>
-              <button type="button" onClick={handleReset} className="btn btn-danger mb-2 waves-effect waves-light">Reset</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-};
+    );
+}
 
-export default Sign_Up;
+export default Sign_Up; // Export the Sign_Up component for use in other components

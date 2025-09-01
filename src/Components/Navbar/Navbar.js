@@ -1,10 +1,44 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
-  const handleClick = () => {
-    // Add your click handler logic here
+  const [click, setClick] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+
+  const handleClick = () => setClick(!click);
+
+  useEffect(() => {
+    // Check if user is logged in
+    const authtoken = sessionStorage.getItem("auth-token");
+    const email = sessionStorage.getItem("email");
+    
+    if (authtoken) {
+      setIsLoggedIn(true);
+      // Extract username from email (part before @)
+      if (email) {
+        const extractedUsername = email.split('@')[0];
+        setUsername(extractedUsername);
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    // Clear session storage
+    sessionStorage.removeItem("auth-token");
+    sessionStorage.removeItem("name");
+    sessionStorage.removeItem("email");
+    sessionStorage.removeItem("phone");
+    
+    // Update state
+    setIsLoggedIn(false);
+    setUsername("");
+    
+    // Navigate to home page
+    navigate("/");
+    window.location.reload(); // Refresh the page
   };
 
   return (
@@ -27,26 +61,40 @@ const Navbar = () => {
       </div>
       
       <div className="nav__icon" onClick={handleClick}>
-        <i className="fa fa-times fa fa-bars"></i>
+        <i className={click ? "fa fa-times" : "fa fa-bars"}></i>
       </div>
       
-      <ul className="nav__links active">
+      <ul className={click ? "nav__links active" : "nav__links"}>
         <li className="link">
-          <Link to="/">Home</Link>
+          <Link to="/" onClick={handleClick}>Home</Link>
         </li>
         <li className="link">
-          <Link to="/appointments">Appointments</Link>
+          <Link to="/appointments" onClick={handleClick}>Appointments</Link>
         </li>
-        <li className="link">
-          <Link to="/signup">
-            <button className="btn1">Sign Up</button>
-          </Link>
-        </li>
-        <li className="link">
-          <Link to="/login">
-            <button className="btn1">Login</button>
-          </Link>
-        </li>
+        
+        {isLoggedIn ? (
+          <>
+            <li className="link">
+              <span className="username">Welcome, {username}</span>
+            </li>
+            <li className="link">
+              <button className="btn1" onClick={handleLogout}>Logout</button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li className="link">
+              <Link to="/signup" onClick={handleClick}>
+                <button className="btn1">Sign Up</button>
+              </Link>
+            </li>
+            <li className="link">
+              <Link to="/login" onClick={handleClick}>
+                <button className="btn1">Login</button>
+              </Link>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );

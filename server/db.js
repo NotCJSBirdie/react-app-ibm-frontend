@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
-const mongoURI =  "mongodb://root:vg7UJLOEUKI0qZvWeoFNVdYf@127.0.0.1:27017";
+// Updated mongoURI with correct host IP from your credentials
+const mongoURI = "mongodb://root:OKxBiGx5Y22wfPX1zlHRzIIE@172.21.157.113:27017";
+
+// Add this line to suppress the deprecation warning
+mongoose.set('strictQuery', false);
 
 const connectToMongo = async (retryCount) => {
     const MAX_RETRIES = 3;
