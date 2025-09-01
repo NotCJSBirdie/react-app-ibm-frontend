@@ -14,6 +14,12 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
   const handleCancel = (appointmentId) => {
     const updatedAppointments = appointments.filter((appointment) => appointment.id !== appointmentId);
     setAppointments(updatedAppointments);
+
+    // Remove appointment data for this doctor
+    localStorage.removeItem(name);
+
+    // Remove global latestAppointment key for Notification UI
+    localStorage.removeItem("latestAppointment");
   };
 
   const handleFormSubmit = (appointmentData) => {
@@ -21,9 +27,39 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
       id: uuidv4(),
       ...appointmentData,
     };
+
     const updatedAppointments = [...appointments, newAppointment];
     setAppointments(updatedAppointments);
     setShowModal(false);
+
+    // Save doctor data in localStorage
+    const doctorData = { name, speciality, experience, ratings, profilePic };
+    localStorage.setItem('doctorData', JSON.stringify(doctorData));
+
+    // Save appointment data in localStorage (use doctor name as key)
+    localStorage.setItem(name, JSON.stringify({
+      name: newAppointment.name,
+      phoneNumber: newAppointment.phoneNumber,
+      date: newAppointment.date,
+      time: newAppointment.timeSlot,
+    }));
+
+    // Save global latest appointment for Notification UI
+    localStorage.setItem(
+      "latestAppointment",
+      JSON.stringify({
+        doctorName: name,
+        speciality,
+        experience,
+        ratings,
+        profilePic,
+        patientName: newAppointment.name,
+        phoneNumber: newAppointment.phoneNumber,
+        date: newAppointment.date,
+        time: newAppointment.timeSlot,
+      })
+    );
+    // Optionally store patient email in sessionStorage if your app collects it
   };
 
   const handleCloseModal = () => {
@@ -101,7 +137,6 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <button className="close-modal" onClick={handleCloseModal}>×</button>
-            
             <div className="modal-doctor-info">
               <div className="doctor-card-profile-image-container">
                 {profilePic ? (
@@ -126,7 +161,6 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
                 <div className="doctor-card-detail-consultationfees">Ratings: {ratings}</div>
               </div>
             </div>
-
             {appointments.length > 0 ? (
               <div className="appointment-booked-info">
                 <h3 style={{ textAlign: 'center', color: '#27ae60' }}>Appointment Booked!</h3>
