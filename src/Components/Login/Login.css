@@ -152,3 +152,18 @@
         margin-right: 0; /* Remove right margin */
     }
 }
+
+.error {
+  color: #ff4757;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control.error-input {
+  border: 1px solid #ff4757;
+}
