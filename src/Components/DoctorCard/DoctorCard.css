@@ -1,6 +1,6 @@
 .doctor-card-container {
   width: 300px;
-  height: 100%;
+  height: auto;
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
@@ -8,6 +8,7 @@
   margin: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
+  background-color: #fff;
 }
 
 .doctor-card-details-container {
@@ -34,7 +35,7 @@
 
 .doctor-card-details {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .doctor-card-detail-name {
@@ -64,6 +65,11 @@
   color: #555;
 }
 
+/* Doctor Card Options Container */
+.doctor-card-options-container {
+  padding: 0 20px 20px;
+}
+
 .book-appointment-btn {
   background-color: #3498db;
   color: #fff;
@@ -75,6 +81,7 @@
   width: 100%;
   transition: background-color 0.3s ease;
   text-align: center;
+  margin-bottom: 15px;
 }
 
 .book-appointment-btn:hover {
@@ -101,20 +108,9 @@
   background-color: #c0392b;
 }
 
-/* Add these styles to your existing DoctorCard.css */
-
-.has-appointments {
-  background-color: #f39c12;
-}
-
-.has-appointments:hover {
-  background-color: #e67e22;
-}
-
+/* Existing Appointments Styles */
 .existing-appointments {
   margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #eee;
 }
 
 .existing-appointments h4 {
@@ -125,29 +121,31 @@
 
 .appointment-item {
   background-color: #f8f9fa;
-  padding: 10px;
-  border-radius: 4px;
+  padding: 12px;
+  border-radius: 6px;
   margin-bottom: 10px;
   border-left: 3px solid #27ae60;
 }
 
-.appointment-item p {
-  margin: 5px 0;
+.appointment-info p {
+  margin: 4px 0;
   font-size: 14px;
+  color: #555;
 }
 
-.cancel-btn {
+.cancel-appointment-btn {
   background-color: #e74c3c;
   color: white;
   border: none;
-  padding: 5px 10px;
-  border-radius: 3px;
+  padding: 8px 12px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
-  margin-top: 5px;
+  margin-top: 8px;
+  transition: background-color 0.3s ease;
 }
 
-.cancel-btn:hover {
+.cancel-appointment-btn:hover {
   background-color: #c0392b;
 }
 
@@ -200,4 +198,47 @@
 .close-modal:hover {
   background-color: #f0f0f0;
   color: #333;
+}
+
+/* Modal Doctor Info */
+.modal-doctor-info {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+/* Appointment Booked Info */
+.appointment-booked-info {
+  padding: 20px;
+}
+
+.booked-info {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  border-left: 4px solid #27ae60;
+}
+
+.appointment-details p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.appointment-details strong {
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modal-content {
+    margin: 10px;
+    max-height: 95vh;
+  }
+  
+  .doctor-card-container {
+    width: 100%;
+    max-width: 320px;
+  }
 }
