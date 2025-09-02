@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 // Updated mongoURI with correct host IP from your credentials
-const mongoURI = "mongodb://root:P93M9CR8jEHlzj1teCOrcNPo@172.21.147.105:27017";
+const mongoURI = "mongodb://root:roednDtmpzMlTltpnDd21npd@172.21.168.253:27017";
 
 // Add this line to suppress the deprecation warning
 mongoose.set('strictQuery', false);
