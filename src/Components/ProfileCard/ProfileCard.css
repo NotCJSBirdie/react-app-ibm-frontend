@@ -1,0 +1,393 @@
+/* Following code has been commented with appropriate comments for your reference. */
+
+/* Styles for the container holding the profile information */
+.profile-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 0;
+    width: 400px;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 1000;
+    margin-top: 10px;
+    max-height: 600px;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+  }
+  
+  /* Enhanced container for standalone profile page */
+  .profile-container {
+    max-width: 400px; /* Set the maximum width of the container to 400 pixels */
+    margin: 15% auto; /* Center the container horizontally with a 15% top margin */
+    padding: 20px; /* Add 20 pixels of padding inside the container */
+    background-color: #f5f5f5; /* Set the background color of the container to light gray */
+    border-radius: 8px; /* Apply a border radius of 8 pixels to round the corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styles for the heading within the profile container */
+  .profile-container h1 {
+    margin-top: 0; /* Remove any top margin from the heading */
+    color: #333;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  /* Styles for the form within the profile container */
+  .profile-container form {
+    margin-bottom: 20px; /* Add a bottom margin of 20 pixels to the form */
+  }
+  
+  /* Enhanced header styling */
+  .profile-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-bottom: none;
+    padding: 20px;
+    margin: 0;
+    border-radius: 8px 8px 0 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .profile-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .profile-header:hover::before {
+    opacity: 1;
+  }
+  
+  .profile-header h3 {
+    margin: 0;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Enhanced profile details styling */
+  .profile-details {
+    padding: 25px;
+    background-color: #fff; /* Set the background color of details container to white */
+    border-radius: 0 0 8px 8px; /* Apply rounded corners to bottom */
+  }
+  
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+  
+  .profile-info h4 {
+    color: #2c5aa0;
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    padding: 15px;
+    background: linear-gradient(45deg, #f8f9ff, #e3f2fd);
+    border-radius: 8px;
+    border-left: 4px solid #2c5aa0;
+  }
+  
+  /* Styles for headings within the profile details container */
+  .profile-details h2 {
+    margin-top: 0; /* Remove any top margin from headings inside details container */
+    color: #333;
+    font-weight: 600;
+  }
+  
+  /* Enhanced field styling */
+  .profile-field {
+    margin: 10px 0;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 3px solid #667eea;
+    transition: all 0.3s ease;
+  }
+  
+  .profile-field:hover {
+    background: #e3f2fd;
+    transform: translateX(5px);
+  }
+  
+  /* Styles for paragraphs within the profile details container */
+  .profile-field p {
+    margin: 0; /* Remove default margins */
+    color: #333;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  .profile-field b {
+    color: #2c5aa0;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Enhanced actions section */
+  .profile-actions {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 20px;
+    text-align: center;
+  }
+  
+  /* Enhanced button styling */
+  .btn-edit,
+  .profile-details button {
+    background: linear-gradient(135deg, #2190ff 0%, #21d4fd 100%); /* Enhanced gradient background */
+    color: #fff; /* Set the text color of buttons to white */
+    border: none; /* Remove borders from buttons */
+    border-radius: 25px; /* More rounded corners */
+    padding: 12px 24px; /* Enhanced padding */
+    cursor: pointer; /* Change cursor to pointer when hovering over buttons */
+    font-size: 14px;
+    font-weight: 600;
+    width: 100%;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(33, 144, 255, 0.3);
+  }
+  
+  .btn-edit:hover,
+  .profile-details button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(33, 144, 255, 0.4);
+  }
+  
+  /* Enhanced form styling */
+  .profile-edit-form {
+    padding: 0;
+    background: #fff;
+    border-radius: 8px;
+  }
+  
+  .profile-edit-form form {
+    padding: 25px;
+  }
+  
+  /* Enhanced form group styling */
+  .form-group {
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  /* Enhanced label styling */
+  .form-group label,
+  .profile-container label {
+    display: block; /* Display labels as block elements to stack them vertically */
+    margin-bottom: 8px; /* Add bottom margin to separate labels */
+    font-weight: 600;
+    color: #2c5aa0;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Enhanced input styling */
+  .form-group input,
+  .profile-container input[type="text"],
+  .profile-container input[type="email"] {
+    width: 100%; /* Set the width of inputs to 100% of the container */
+    padding: 12px 16px; /* Enhanced padding inside the input fields */
+    border: 2px solid #e0e0e0; /* Enhanced border */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+  }
+  
+  .form-group input:focus,
+  .profile-container input[type="text"]:focus,
+  .profile-container input[type="email"]:focus {
+    outline: none;
+    border-color: #2190ff;
+    box-shadow: 0 0 0 3px rgba(33, 144, 255, 0.1);
+    background: white;
+    transform: translateY(-1px);
+  }
+  
+  .form-group input.disabled-input {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  /* Enhanced button container */
+  .form-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+  }
+  
+  /* Enhanced save button */
+  .btn-save,
+  .profile-container button {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    flex: 1;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+  }
+  
+  .btn-save:hover,
+  .profile-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+  }
+  
+  /* Enhanced cancel button */
+  .btn-cancel {
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    flex: 1;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+  }
+  
+  .btn-cancel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+  }
+  
+  /* Add loading animation */
+  .profile-card.loading {
+    opacity: 0.7;
+  }
+  
+  .profile-card.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #2190ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Success message animation */
+  .success-message {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border-left: 4px solid #28a745;
+    animation: slideIn 0.3s ease;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive design enhancements */
+  @media (max-width: 768px) {
+    .profile-card {
+      width: 320px;
+      right: 10px;
+    }
+    
+    .profile-container {
+      margin: 10% auto;
+      max-width: 350px;
+    }
+    
+    .form-buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .profile-header h3 {
+      font-size: 18px;
+    }
+    
+    .profile-info h4 {
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .profile-card {
+      width: 280px;
+      right: 5px;
+    }
+    
+    .profile-details {
+      padding: 20px;
+    }
+    
+    .profile-edit-form form {
+      padding: 20px;
+    }
+  }
+  
+  /* Add hover effects for better interactivity */
+  .profile-card:hover {
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Add focus states for accessibility */
+  button:focus {
+    outline: 2px solid #2190ff;
+    outline-offset: 2px;
+  }
+  
+  /* Add smooth transitions for all interactive elements */
+  * {
+    transition: all 0.3s ease;
+  }
+  

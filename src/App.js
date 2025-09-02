@@ -8,7 +8,8 @@ import InstantConsultation from './Components/InstantConsultationBooking/Instant
 import BookingConsultation from './Components/BookingConsultation/BookingConsultation';
 import Notification from './Components/Notification/Notification';
 import ReviewsTable from './Components/ReviewsTable/ReviewsTable';
-
+import ProfilePage from './Components/ProfilePage/ProfilePage';
+import ReportsLayout from './Components/ReportsLayout/ReportsLayout';
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path="/instant-consultation" element={<InstantConsultation />} />
             <Route path="/appointments" element={<BookingConsultation />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/reports" element={<ReportsLayout />} />
           </Routes>
         </Notification>
         <ReviewsTable />

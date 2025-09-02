@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
+import ProfileCard from '../ProfileCard/ProfileCard';
 
 const Navbar = () => {
   const [click, setClick] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const navigate = useNavigate();
+  const profileRef = useRef(null);
 
   const handleClick = () => setClick(!click);
 
@@ -25,6 +28,20 @@ const Navbar = () => {
     }
   }, []);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setShowProfileDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const handleLogout = () => {
     // Clear session storage
     sessionStorage.removeItem("auth-token");
@@ -35,10 +52,15 @@ const Navbar = () => {
     // Update state
     setIsLoggedIn(false);
     setUsername("");
+    setShowProfileDropdown(false);
     
     // Navigate to home page
     navigate("/");
     window.location.reload(); // Refresh the page
+  };
+
+  const toggleProfileDropdown = () => {
+    setShowProfileDropdown(!showProfileDropdown);
   };
 
   return (
@@ -71,14 +93,38 @@ const Navbar = () => {
         <li className="link">
           <Link to="/appointments" onClick={handleClick}>Appointments</Link>
         </li>
+
+        <li className="link">
+        <Link to="/profile" className="profile-link" onClick={() => setShowProfileDropdown(false)}>
+  View Full Profile
+</Link>
+        </li>
+        
         
         {isLoggedIn ? (
           <>
-            <li className="link">
-              <span className="username">Welcome, {username}</span>
-            </li>
-            <li className="link">
-              <button className="btn1" onClick={handleLogout}>Logout</button>
+            <li className="link profile-dropdown-container" ref={profileRef}>
+              <span 
+                className="username-clickable" 
+                onClick={toggleProfileDropdown}
+              >
+                Welcome, {username} ▼
+              </span>
+              {showProfileDropdown && (
+                <div className="profile-dropdown">
+                  <ProfileCard />
+                  <div className="dropdown-menu-item">
+  <Link to="/reports" className="reports-link" onClick={() => setShowProfileDropdown(false)}>
+    📊 Your Reports
+  </Link>
+</div>
+                  <div className="dropdown-actions">
+                    <button className="btn-logout" onClick={handleLogout}>
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              )}
             </li>
           </>
         ) : (

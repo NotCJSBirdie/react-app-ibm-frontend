@@ -1,0 +1,20 @@
+.profile-page {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+  background-color: #f8f9fa;
+}
+
+.profile-container {
+  position: relative;
+}
+
+.profile-page .profile-card {
+  position: relative;
+  top: 0;
+  right: auto;
+  margin: 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
