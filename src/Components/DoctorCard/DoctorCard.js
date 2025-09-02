@@ -15,10 +15,8 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
     const updatedAppointments = appointments.filter((appointment) => appointment.id !== appointmentId);
     setAppointments(updatedAppointments);
 
-    // Remove appointment data for this doctor
     localStorage.removeItem(name);
 
-    // Remove global latestAppointment key for Notification UI
     localStorage.removeItem("latestAppointment");
   };
 
